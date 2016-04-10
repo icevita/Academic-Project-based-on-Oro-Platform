@@ -2,9 +2,11 @@
 
 namespace ORO\Bundle\IssueBundle\Controller;
 
+use ORO\Bundle\IssueBundle\Entity\Issue;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Oro\Bundle\IssueBundle\Entity\IssuePriority;
 use Oro\Bundle\IssueBundle\Entity\IssueResolution;
+use Oro\Bundle\NavigationBundle\Annotation\TitleTemplate;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Oro\Bundle\SecurityBundle\Annotation\Acl;
@@ -16,72 +18,99 @@ use Oro\Bundle\SecurityBundle\Annotation\AclAncestor;
 class IssueController extends Controller
 {
     /**
-     * @Route(name="issue_index")
-     * @Acl(
-     *      id="issue_view",
-     *      type="entity",
-     *      class="OROIssueBundle:Issue",
-     *      permission="VIEW"
-     * )
-     * @Template()
-     */
-    public function indexAction()
-    {
-        return array(
-            'entity_class' => $this->container->getParameter('issue.entity.issue.class')
-        );
-    }
-
-    /**
      * @Route("/create", name="issue_create")
-     * @Acl(
-     *      id="issue_create",
-     *      type="entity",
-     *      class="OROIssueBundle:Issue",
-     *      permission="CREATE"
-     * )
      * @Template("OROIssueBundle:Issue:update.html.twig")
+     * @TitleTemplate("oro.issue.menu.issue_create")
+     * @Acl(
+     *     id="issue_create",
+     *     type="entity",
+     *     class="OROIssueBundle:Issue",
+     *     permission="CREATE"
+     * )
+     * @param Request $request
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function createAction()
+    public function createAction(Request $request)
     {
+        /** @var Issue $issue */
         $issue = new Issue();
-        $issue->setReporter($this->getUser());
+        $issue.setReporter($this->getUser());
         $assigneeId = $request->query->get('assigneeId');
         if ($assigneeId && $assignee = $this->getDoctrine()->getRepository('OroUserBundle:User')->find($assigneeId)) {
             $issue->setAssignee($assignee);
         }
-        $result = $this->update($issue);
-        if ($request->query->get('_wid')) {
-            $result['formAction'] = $this->generateUrl('bug_tracker.issue_create');
-        }
-        return $result;
 
+        return $this->update($issue, $request);
+    }
 
-        $issue = new Issue();
-        $parentId = $this->get('request_stack')->getCurrentRequest()->get('id', 0);
-        if ((int)$parentId > 0) {
-            $parent = $this
-                ->getDoctrine()
-                ->getRepository('OroAcademicIssueBundle:Issue')
-                ->findOneBy(['id' => $parentId, 'type' => 'Story']);
-            $issue
-                ->setReporter($this->getUser())
-                ->setAssignee($this->getUser())
-                ->setParent($parent)
-                ->setType('Subtask');
-            $formAction = $this->get('oro_entity.routing_helper')
-                ->generateUrlByRequest(
-                    'oroacademic_subissue_create',
-                    $this->get('request_stack')->getCurrentRequest(),
-                    ['id' => $parentId]
-                );
-        } else {
-            $formAction = $this->get('oro_entity.routing_helper')
-                ->generateUrlByRequest(
-                    'oroacademic_issue_create',
-                    $this->get('request_stack')->getCurrentRequest()
-                );
+    /**
+     * @Route("/update/{id}", name="issue_update", requirements={"id":"\d+"}, defaults={"id":0})
+     * @Template()
+     * @TitleTemplate("oro.issue.menu.issue_update")
+     * @Acl(
+     *     id="issue_update",
+     *     type="entity",
+     *     class="OROIssueBundle:Issue",
+     *     permission="EDIT"
+     * )
+     * @param Issue $issue
+     * @param Request $request
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function updateAction(Issue $issue, Request $request)
+    {
+        return $this->update($issue, $request);
+    }
+
+    private function update(Issue $issue, Request $request)
+    {
+        $issueHandler = $this->get('oro_issue.form.handler.issue');
+        if ($issueHandler->process($issue, $this->getUser())) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($issue);
+            $entityManager->flush();
+
+            return $this->get('oro_ui.router')->redirectAfterSave(
+                array(
+                    'route' => 'issue_update',
+                    'parameters' => array('id' => $issue->getId()),
+                ),
+                array('route' => 'issue_index'),
+                $issue
+            );
         }
-        return $this->formRender($issue, $formAction);
+
+        $form = $issueHandler->getForm();
+
+        return array(
+            'entity' => $issue,
+            'form' => $form->createView(),
+        );
+    }
+
+    /**
+     * @Route("/", name="issue_index")
+     * @Template
+     * @Acl(
+     *      id="issue_index",
+     *      type="entity",
+     *      class="OROIssueBundle:Issue",
+     *      permission="VIEW"
+     * )
+     */
+    public function indexAction()
+    {
+        return array('gridName' => 'issues-grid');
+    }
+
+    /**
+     * @Route("/{id}", name="issue_view", requirements={"id"="\d+"})
+     * @Template
+     * @TitleTemplate("oro.issue.menu.issue_view")
+     * @AclAncestor("issue_view")
+     */
+    public function viewAction(Issue $issue)
+    {
+        return array('issue' => $issue);
     }
 }

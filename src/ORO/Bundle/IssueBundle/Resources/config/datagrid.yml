@@ -1,0 +1,187 @@
+datagrid:
+    issues-grid:
+        source:
+            acl_resource: issue_view
+            type: orm
+            query:
+                select:
+                    - issue.id
+                    - issue.code
+                    - issue.summary
+                    - issue.type
+                    - workflowStep.label as workflowStepLabel
+                    - priority.label as priorityLabel
+                    - resolution.label as resolutionLabel
+                    - assignee.id as assigneeId
+                    - CONCAT(assignee.firstName, CONCAT(' ', assignee.lastName)) as assigneeFullName
+                    - reporter.id as reporterId
+                    - CONCAT(reporter.firstName, CONCAT(' ', reporter.lastName)) as reporterFullName
+                    - issue.createdAt
+                    - issue.updatedAt
+                    - >
+                        (CASE WHEN (:user MEMBER OF issue.collaborators) THEN
+                            true
+                        ELSE
+                            false
+                        END) as userInCollaborators
+                from:
+                    - { table: InventoryBundle:Issue, alias: issue }
+                join:
+                    left:
+                        - { join: issue.priority, alias: priority }
+                        - { join: issue.resolution, alias: resolution }
+                        - { join: issue.assignee, alias: assignee }
+                        - { join: issue.reporter, alias: reporter }
+                        - { join: issue.workflowStep, alias: workflowStep }
+                        - { join: issue.collaborators, alias: collaborator }
+        columns:
+            code:
+                label: oro.issue.code.label
+            summary:
+                label: oro.issue.summary.label
+            issueType:
+                label: oro.issue.type.label
+            workflowStepLabel:
+                label: oro.issue.workflow_step.label
+            priorityLabel:
+                label: oro.issue.priority.label
+            resolutionLabel:
+                label: oro.issue.resolution.label
+            reporterFullName:
+                label: oro.issue.reporter.label
+                type:  twig
+                frontend_type: html
+                template: OROIssueBundle:Issue:Datagrid/Property/reporter.html.twig
+            assigneeFullName:
+                label: oro.issue.assignee.label
+                type:  twig
+                frontend_type: html
+                template: OROIssueBundle:Issue:Datagrid/Property/assignee.html.twig
+            createdAt:
+                label: oro.ui.created_at
+                frontend_type: datetime
+            updatedAt:
+                label: oro.ui.updated_at
+                frontend_type: datetime
+        sorters:
+            columns:
+                code:
+                    data_name: issue.code
+                summary:
+                    data_name: issue.summary
+                type:
+                    data_name: issue.type
+                reporterFullName:
+                    data_name: reporterFullName
+                assigneeFullName:
+                    data_name: assigneeFullName
+                createdAt:
+                    data_name: issue.createdAt
+                updatedAt:
+                    data_name: issue.updatedAt
+            default:
+                createdAt: DESC
+        filters:
+            columns:
+                code:
+                    type: string
+                    data_name: issue.code
+                summary:
+                    type:      string
+                    data_name: issue.summary
+                type:
+                    label: oroacademic.issue.type.label
+                    type: choice
+                    data_name: issue.type
+                    options:
+                        field_options:
+                              multiple: true
+                              choices: '%issue.types%'
+                collaborators:
+                    type: entity
+                    data_name: collaborator.id
+                    options:
+                        field_options:
+                            class: OroUserBundle:User
+                            translatable_options: false
+                createdAt:
+                    type:      datetime
+                    data_name: issue.createdAt
+                updatedAt:
+                    type:      datetime
+                    data_name: issue.updatedAt
+        properties:
+            id: ~
+            view_link:
+                type:       url
+                route:      issue_view
+                params:     [ id ]
+            update_link:
+                type:       url
+                route:      issue_update
+                params:     [ id ]
+            delete_link:
+                type:       url
+                route:      api_issue_delete
+                params:     [ id ]
+        actions:
+            view:
+                type:          navigate
+                acl_resource:  issue_view
+                label:         oro.grid.action.view
+                icon:          eye-open
+                link:          view_link
+                rowAction:     true
+            update:
+                type:          navigate
+                acl_resource:  issue_create
+                label:         oro.grid.action.update
+                icon:          edit
+                link:          update_link
+                rowAction:     true
+            delete:
+                type:          delete
+                acl_resource:  issue_delete
+                label:         oro.grid.action.delete
+                icon:          trash
+                link:          delete_link
+                rowAction:     true
+    subtask-issues-grid:
+            extends: issues-grid
+            source:
+                query:
+                    where:
+                        and:
+                            - issue.parent = :parent_id
+                bind_parameters:
+                    - parent_id
+            filters: ~
+            options:
+                toolbarOptions:
+                    hide: true
+    related-issues-grid:
+                extends: issues-grid
+                source:
+                    query:
+                        where:
+                            and:
+                                - issue.id IN (:ids)
+                    bind_parameters:
+                        - ids
+                filters: ~
+                options:
+                    toolbarOptions:
+                        hide: true
+    collaborators-grid:
+                extends: users-grid
+                source:
+                    query:
+                        where:
+                            and:
+                                - u.id IN (:ids)
+                    bind_parameters:
+                        - ids
+                filters: ~
+                options:
+                    toolbarOptions:
+                        hide: true

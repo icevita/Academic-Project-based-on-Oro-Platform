@@ -1,0 +1,40 @@
+oro:
+        issue:
+            menu:
+                label:  Issues
+                issue_create: Create Issue
+                issue_update: Update Issue
+                issue_view: View Issue
+            entity_label:               Issue
+            entity_plural_label:        Issues
+            code.label:                 Code
+            summary.label:              Summary
+            type.label:                 Type
+            description.label:          Description
+            workflow_step.label:        Status
+            priority.label:             Priority
+            resolution.label:           Resolution
+            assignee.label:             Assigned To
+            reporter.label:             Reported By
+            related.label:              Related Issues
+            collaborators.label:        Involved Users
+            organization.label:         Organization
+            parent.label:               Parent
+            children.label:             Children
+
+            priority:
+                        entity_label:   Issue Priority
+                        name.label:     Name
+                        order.label:    Order
+
+            resolution:
+                        entity_label:   Issue Resolution
+                        name.label:     Name
+                        label.label:    Label
+
+            saved_message:              Issue saved.
+
+        subissue:
+            entity_label:               Sub-Task
+            entity_plural_label:        Sub-Tasks
+            parent_story:               Parent Story

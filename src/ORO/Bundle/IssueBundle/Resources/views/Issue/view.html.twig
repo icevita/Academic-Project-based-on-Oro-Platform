@@ -1,0 +1,129 @@
+{% extends 'OroUIBundle:actions:view.html.twig' %}
+{% import 'OroUIBundle::macros.html.twig' as UI %}
+{% import 'OroDataGridBundle::macros.html.twig' as dataGrid %}
+{% import 'OroUserBundle::macros.html.twig' as U %}
+
+{% block navButtons %}
+    {% if resource_granted('EDIT', issue) %}
+        {{ UI.editButton({
+            'path' : path('issue_update', { id: issue.id }),
+            'entity_label': 'oro.issue.entity_label'|trans
+        }) }}
+
+        {% if issue.issueType == '%issue.types.Story%' %}
+            {{ UI.button({
+                'path' : path('issue_create', { parent: issue.id }),
+                'label': 'oro.subissue.entity_label'|trans
+            }) }}
+        {% endif %}
+    {% endif %}
+
+    {% if resource_granted('DELETE', entity) %}
+        {{ UI.deleteButton({
+            'dataUrl': path('api_issue_delete', {'id': issue.id}),
+            'dataRedirect': path('issue_index'),
+            'aCss': 'no-hash remove-button',
+            'id': 'btn-remove-issue',
+            'dataId': issue.id,
+            'entity_label': 'oro.issue.entity_label'|trans,
+        }) }}
+    {% endif %}
+{% endblock navButtons %}
+
+{% block pageHeader %}
+    {% set breadcrumbs = {
+    'entity':      entity,
+    'indexPath':   path('issue_index'),
+    'indexLabel': 'oro.issue.entity_plural_label'|trans,
+    'entityTitle': issue.summary
+    } %}
+    {{ parent() }}
+{% endblock pageHeader %}
+
+{% block content_data %}
+    {% set data %}
+        <div class="widget-content">
+            <div class="row-fluid form-horizontal">
+                <div class="responsive-block">
+                    {{ UI.renderProperty('oro.issue.summary.label'|trans, issue.summary) }}
+                    {{ UI.renderProperty('oro.issue.code.label'|trans, issue.code) }}
+                    {{ UI.renderProperty('oro.issue.type.label'|trans, issue.type) }}
+                    {{ UI.renderHtmlProperty('oro.issue.description.label'|trans, issue.description|nl2br) }}
+                    {{ UI.renderProperty('oro.ui.created_at'|trans, issue.createdAt|oro_format_datetime) }}
+                    {{ UI.renderProperty('oro.ui.updated_at'|trans, issue.updatedAt|oro_format_datetime) }}
+                    {{ UI.renderProperty('oro.issue.priority.label'|trans, issue.priority) }}
+
+                    {%- set assigneeData -%}
+                        {%- if issue.assignee -%}
+                            {{ U.render_user_name(issue.assignee) }}
+                        {%- endif -%}
+                    {%- endset -%}
+                    {{ UI.renderHtmlProperty('oro.issue.assignee.label'|trans, assigneeData) }}
+
+                    {%- set reporterData -%}
+                        {%- if issue.reporter -%}
+                            {{ U.render_user_name(issue.reporter) }}
+                        {%- endif -%}
+                    {%- endset -%}
+                    {{ UI.renderHtmlProperty('oro.issue.reporter.label'|trans, reporterData) }}
+
+                    {% if issue.parent is not empty %}
+                        <a href="{{ path('issue_view', {'id': issue.parent.id}) }}">{{ UI.renderProperty('oro.subissue.parent_story'|trans, issue.parent.code) }}</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    {% endset %}
+    {% set dataBlocks = [
+    {
+    'title': 'Data'|trans,
+    'class': 'active',
+    'subblocks': [
+    { 'data' : [data] }
+    ]
+    }
+    ] %}
+
+    {% if issue.relatedIssues is not null %}
+        {% set dataBlocks = dataBlocks|merge([{
+        'title': 'oro.issue.related.label'|trans,
+        'subblocks': [{
+        'title': '',
+        'useSpan': false,
+        'data' : [
+        dataGrid.renderGrid('related-issues-grid', {'ids': issue.relatedIssues})
+        ]
+        }]
+        }] ) %}
+    {% endif %}
+
+    {% if issue.type == '%issue.types.Story%' %}
+        {% set dataBlocks = dataBlocks|merge([{
+        'title': 'oro.subissue.entity_plural_label'|trans,
+        'subblocks': [{
+        'title': '',
+        'useSpan': false,
+        'data' : [
+        dataGrid.renderGrid('subtask-issues-grid', {'parent_id': issue.id})
+        ]
+        }]
+        }] ) %}
+    {% endif %}
+
+    {% if issue.collaborators is not null %}
+        {% set dataBlocks = dataBlocks|merge([{
+        'title': 'oro.issue.collaborators.label'|trans,
+        'subblocks': [{
+        'title': '',
+        'useSpan': false,
+        'data' : [
+        dataGrid.renderGrid('collaborators-grid', {'ids': issue.collaborators})
+        ]
+        }]
+        }] ) %}
+    {% endif %}
+
+    {% set id = 'issueView' %}
+    {% set data = { 'dataBlocks': dataBlocks } %}
+    {{ parent() }}
+{% endblock content_data %}

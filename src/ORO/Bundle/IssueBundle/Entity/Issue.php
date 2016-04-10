@@ -708,4 +708,47 @@ class Issue extends ExtendIssue implements DatesAwareInterface
     {
         return $this->workflowStep;
     }
+
+    /**
+     * Add relatedIssues
+     *
+     * @param \Doctrine\Common\Collections\ArrayCollection $relatedIssues
+     *
+     * @return Issue
+     */
+    public function setRelatedIssues(ArrayCollection $relatedIssues)
+    {
+        $this->relatedIssues = $relatedIssues;
+        return $this;
+    }
+
+    /**
+     * Get relatedIssues
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getRelatedIssues()
+    {
+        return $this->relatedIssues;
+    }
+
+    /**
+     * Remove relatedIssue
+     *
+     * @param Issue $relatedIssue
+     */
+    public function removeRelatedIssue(Issue $relatedIssue)
+    {
+        $this->relatedIssues->removeElement($relatedIssue);
+    }
+
+    /**
+     * Get relatedIssues
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getIssuesRelated()
+    {
+        return $this->relatedIssues;
+    }
 }
