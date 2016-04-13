@@ -17,7 +17,7 @@ services:
             - oro_issue
             - oro_issue
 
-   form.handler.issue:
+    form.handler.issue:
         class: '%form.handler.issue.class%'
         scope: request
         arguments:

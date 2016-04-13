@@ -115,6 +115,7 @@ class Issue extends ExtendIssue implements DatesAwareInterface
      *              "auditable"=true
      *          }
      *      }
+     * )
      */
     protected $description;
 

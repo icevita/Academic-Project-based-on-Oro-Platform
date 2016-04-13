@@ -64,7 +64,7 @@ class IssueController extends Controller
 
     private function update(Issue $issue, Request $request)
     {
-        $issueHandler = $this->get('oro_issue.form.handler.issue');
+        $issueHandler = $this->get('form.handler.issue');
         if ($issueHandler->process($issue, $this->getUser())) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($issue);

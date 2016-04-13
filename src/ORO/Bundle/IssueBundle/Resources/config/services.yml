@@ -17,3 +17,8 @@ services:
         arguments:
           - '%issue.entity.class%'
           - '@doctrine.orm.entity_manager'
+
+    issue.note.listener:
+        class: ORO\Bundle\IssueBundle\EventListener\NoteListener
+        tags:
+          - { name: doctrine.event_listener, event: prePersist, method: postPersist }

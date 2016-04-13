@@ -1,6 +1,6 @@
 <?php
 
-namespace OroAcademic\Bundle\IssueBundle\Controller\Api\Rest;
+namespace ORO\Bundle\IssueBundle\Controller\Api\Rest;
 
 
 use FOS\RestBundle\Controller\Annotations\NamePrefix;
@@ -178,16 +178,14 @@ class IssueController extends RestController implements ClassResourceInterface
                 break;
             case 'children':
             case 'relatedIssues':
-                if ($value) {
-                    if (is_object($value)) {
-                        $arr = [];
-                        foreach ($value as $v) {
-                            $arr[] = $v->getId();
-                        }
-                        $value = $arr;
-                    } else {
-                        $value = null;
+                if ($value && is_object($value)) {
+                    $arr = [];
+                    foreach ($value as $v) {
+                        $arr[] = $v->getId();
                     }
+                    $value = $arr;
+                } else {
+                    $value = null;
                 }
                 break;
             default:
