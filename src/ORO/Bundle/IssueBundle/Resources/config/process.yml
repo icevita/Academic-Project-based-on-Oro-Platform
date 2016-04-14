@@ -40,6 +40,7 @@ triggers:
         -
             event: update
             field: reporter
+
     oro_note_collaborators:
         -
             event: create

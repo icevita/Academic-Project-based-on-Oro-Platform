@@ -34,6 +34,12 @@ oro:
 
             saved_message:              Issue saved.
 
+            widget:
+              label_by_status: Issues by Status
+              description_by_status: Issues by Status
+              label: Recent Issues
+              description: Recent Issues
+
         subissue:
             entity_label:               Sub-Task
             entity_plural_label:        Sub-Tasks
