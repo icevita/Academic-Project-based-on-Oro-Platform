@@ -1,5 +1,5 @@
 workflows:
-    oroacademic_issue_flow:
+    issue_flow:
               label: 'Issues Workflow'
               entity: ORO\Bundle\IssueBundle\Entity\Issue
               entity_attribute: issue

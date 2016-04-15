@@ -100,7 +100,9 @@ class IssueController extends Controller
      */
     public function indexAction()
     {
-        return array('gridName' => 'issues-grid');
+        return [
+            'entity_class' => $this->container->getParameter('issue.entity.class'),
+        ];
     }
 
     /**
@@ -108,9 +110,23 @@ class IssueController extends Controller
      * @Template
      * @TitleTemplate("oro.issue.menu.issue_view")
      * @AclAncestor("issue_view")
+     * @param Issue $issue
+     * @return array
      */
     public function viewAction(Issue $issue)
     {
         return array('issue' => $issue);
+    }
+
+    /**
+     * @Route("/user/{userId}", name="user_issues", requirements={"userId"="\d+"})
+     * @AclAncestor("issue_view")
+     * @Template
+     * @param int $userId
+     * @return array
+     */
+    public function issuesAction($userId)
+    {
+        return ['userId' => $userId];
     }
 }

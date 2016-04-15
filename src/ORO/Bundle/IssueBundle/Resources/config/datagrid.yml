@@ -90,7 +90,7 @@ datagrid:
                     type:      string
                     data_name: issue.summary
                 type:
-                    label: oroacademic.issue.type.label
+                    label: oro.issue.type.label
                     type: choice
                     data_name: issue.type
                     options:
@@ -152,9 +152,9 @@ datagrid:
                 query:
                     where:
                         and:
-                            - issue.parent = :parent_id
+                            - issue.parent = :parentId
                 bind_parameters:
-                    - parent_id
+                    - parentId
             filters: ~
             options:
                 toolbarOptions:
@@ -185,3 +185,33 @@ datagrid:
                 options:
                     toolbarOptions:
                         hide: true
+    user-issues-grid:
+                extends: issues-grid
+                source:
+                    query:
+                        where:
+                            and:
+                                - issue.assignee = :usserId or issue.reporter = :usserId
+                    bind_parameters:
+                        - usserId
+                filters: ~
+                options:
+                    toolbarOptions:
+                        hide: true
+    widget-issues-grid:
+                extends: issues-grid
+                source:
+                    query:
+                        where:
+                            and:
+                                - collaborators.id = :userId
+                                - workflowStep.name NOT IN ('closed')
+                    bind_parameters:
+                        - userId
+                filters: ~
+                options:
+                    toolbarOptions:
+                        hide: true
+                        pageSize:
+                            items: [10]
+                            default_per_page: 10

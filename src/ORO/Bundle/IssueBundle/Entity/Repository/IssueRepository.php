@@ -18,25 +18,25 @@ class IssueRepository extends EntityRepository
     public function getIssuesByStatus()
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
-        $qb->select(['COUNT(issue.id) as cnt', 'workflowStep.label'])
+        $qb->select(['COUNT(issue.id) as count', 'workflowStep.label'])
             ->from('OroWorkflowBundle:WorkflowStep', 'workflowStep')
             ->leftJoin('workflowStep.definition', 'definition')
             ->leftJoin(
-                'AcademicBtsBundle:Issue',
+                'OROIssueBundle:Issue',
                 'issue',
                 'WITH',
-                'issue.workflowStep = workflowStep AND definition.name = :d_name'
+                'issue.workflowStep = workflowStep AND definition.name = :def_name'
             )
             ->groupBy('workflowStep.label')
-            ->orderBy('cnt')
-            ->setParameter('d_name', 'issue_flow');
+            ->orderBy('count')
+            ->setParameter('def_name', 'issue_flow');
         $arrayResult = $qb->getQuery()->getArrayResult();
         $result = [];
         foreach ($arrayResult as $row) {
             $item = [
                 'name' => $row['label'],
                 'label' => $row['label'],
-                'count' => $row['cnt'],
+                'count' => $row['count'],
             ];
             $result[$row['label']] = $item;
         }
