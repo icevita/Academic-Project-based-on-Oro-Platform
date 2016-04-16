@@ -14,6 +14,7 @@
 
     {% if resource_granted('issue_create') %}
         {{ UI.addButton({
+            'aCss': 'btn-group',
             'path' : path('issue_create'),
             'entity_label': 'oro.issue.entity_label'|trans
         }) }}

@@ -7,18 +7,14 @@ parameters:
         Story: Story
 
 services:
-#    oro_issue.example:
-#        class: ORO\Bundle\IssueBundle\Example
-#        arguments: [@service_id, "plain_value", %parameter%]
-
     issue.manager.api:
         class: Oro\Bundle\SoapBundle\Entity\Manager\ApiEntityManager
         parent: oro_soap.manager.entity_manager.abstract
         arguments:
-          - '%issue.entity.class%'
+          - 'ORO\Bundle\IssueBundle\Entity\Issue'
           - '@doctrine.orm.entity_manager'
 
     issue.note.listener:
         class: ORO\Bundle\IssueBundle\EventListener\NoteListener
         tags:
-          - { name: doctrine.event_listener, event: prePersist, method: postPersist }
+          - { name: doctrine.event_listener, event: postPersist, method: postPersist }

@@ -131,7 +131,6 @@ class OROIssueBundle implements Migration
         $table = $schema->createTable('resolution');
         $table->addColumn('id', 'integer', ['autoincrement' => true]);
         $table->addColumn('name', 'string', ['length' => 255]);
-        $table->addColumn('priority', 'integer', []);
         $table->setPrimaryKey(['id']);
         $table->addUniqueIndex(['name'], 'UNIQ_FDD30F8A5E237E06');
     }

@@ -6,6 +6,7 @@ namespace ORO\Bundle\IssueBundle\Form\Type;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints as Assert;
 use ORO\Bundle\IssueBundle\Entity\Issue;
 
@@ -34,7 +35,7 @@ class IssueType extends AbstractType
      */
     public function getName()
     {
-        return 'oro_issue';
+        return 'issue';
     }
 
     /**
@@ -80,30 +81,36 @@ class IssueType extends AbstractType
                 'priority',
                 'translatable_entity',
                 [
-                    'label' => 'oro.issue.priority.label',
-                    'class' => 'ORO\Bundle\IssueBundle\Entity\Priority',
                     'required' => true,
-                    'query_builder' => function (EntityRepository $repository) {
-                        return $repository->createQueryBuilder('priority');
-                    }
+                    'label' => 'oro.issue.priority.label',
+                    'class' => 'ORO\Bundle\IssueBundle\Entity\Priority'
                 ]
             )
             ->add(
                 'assignee',
                 'oro_user_select',
                 [
-                    'label' => 'oro.issue.assignee.label',
-                    'required' => true
+                    'required' => true,
+                    'label' => 'oro.issue.assignee.label'
                 ]
             )
             ->add(
                 'relatedIssues',
                 'translatable_entity',
                 [
-                    'label' => 'oro.issue.related.label',
-                    'class' => 'ORO\Bundle\IssueBundle\Entity\Issue',
+                    'required' => false,
                     'multiple' => true,
-                    'required' => false
+                    'label' => 'oro.issue.related.label',
+                    'class' => 'ORO\Bundle\IssueBundle\Entity\Issue'
+                ]
+            )
+            ->add(
+                'resolution',
+                'translatable_entity',
+                [
+                    'required' => false,
+                    'label' => 'oro.issue.resolution.label',
+                    'class' => 'ORO\Bundle\IssueBundle\Entity\Resolution'
                 ]
             );
     }

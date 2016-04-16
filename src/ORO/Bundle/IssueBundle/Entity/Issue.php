@@ -22,6 +22,7 @@ use Oro\Bundle\WorkflowBundle\Entity\WorkflowStep;
  * @Config(
  *      routeName="issue_index",
  *      routeView="issue_view",
+ *      routeCreate="issue_create",
  *      defaultValues={
  *          "ownership"={
  *              "owner_type"="USER",
@@ -449,7 +450,7 @@ class Issue extends ExtendIssue implements DatesAwareInterface
      */
     public function isUpdatedAtSet()
     {
-        return $this->updatedAtSet;
+        return $this->updatedAt;
     }
 
     /**
@@ -637,6 +638,7 @@ class Issue extends ExtendIssue implements DatesAwareInterface
     public function addChild(Issue $children)
     {
         $this->childrens[] = $children;
+
         return $this;
     }
 
@@ -720,6 +722,7 @@ class Issue extends ExtendIssue implements DatesAwareInterface
     public function setRelatedIssues(ArrayCollection $relatedIssues)
     {
         $this->relatedIssues = $relatedIssues;
+
         return $this;
     }
 
@@ -744,12 +747,34 @@ class Issue extends ExtendIssue implements DatesAwareInterface
     }
 
     /**
-     * Get relatedIssues
+     * Add Related Issue
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @param Issue $issue
      */
-    public function getIssuesRelated()
+    public function addRelatedIssue(Issue $issue)
     {
-        return $this->relatedIssues;
+        $relatedIssues = $this->getRelatedIssues();
+        if (!$relatedIssues->contains($issue)) {
+            $this->relatedIssues->add($issue);
+        }
     }
+
+    /**
+     * @param Organization|null $organization
+     * @return $this
+     */
+    public function setOrganization(Organization $organization = null)
+    {
+        $this->organization = $organization;
+        return $this;
+    }
+
+    /**
+     * @return Organization
+     */
+    public function getOrganization()
+    {
+        return $this->organization;
+    }
+
 }

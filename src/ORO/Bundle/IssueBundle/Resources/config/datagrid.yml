@@ -10,8 +10,8 @@ datagrid:
                     - issue.summary
                     - issue.type
                     - workflowStep.label as workflowStepLabel
-                    - priority.label as priorityLabel
-                    - resolution.label as resolutionLabel
+                    - priority.name as priorityName
+                    - resolution.name as resolutionName
                     - assignee.id as assigneeId
                     - CONCAT(assignee.firstName, CONCAT(' ', assignee.lastName)) as assigneeFullName
                     - reporter.id as reporterId
@@ -43,9 +43,9 @@ datagrid:
                 label: oro.issue.type.label
             workflowStepLabel:
                 label: oro.issue.workflow_step.label
-            priorityLabel:
+            priorityName:
                 label: oro.issue.priority.label
-            resolutionLabel:
+            resolutionName:
                 label: oro.issue.resolution.label
             reporterFullName:
                 label: oro.issue.reporter.label

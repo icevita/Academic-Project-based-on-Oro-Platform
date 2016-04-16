@@ -2,6 +2,7 @@
 
 namespace ORO\Bundle\IssueBundle\Form\Handler;
 
+use Oro\Bundle\TagBundle\Entity\TagManager;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -11,8 +12,10 @@ class IssueHandler
 {
     /** @var FormInterface */
     protected $form;
+    
     /** @var Request */
     protected $request;
+    
     /** @var ObjectManager */
     protected $manager;
 
@@ -85,5 +88,15 @@ class IssueHandler
                 ->setReporter($currentUser)
                 ->setAssignee($currentUser);
         }
+    }
+
+    /**
+     * Setter for tag manager
+     *
+     * @param TagManager $tagManager
+     */
+    public function setTagManager(TagManager $tagManager)
+    {
+        $this->tagManager = $tagManager;
     }
 }

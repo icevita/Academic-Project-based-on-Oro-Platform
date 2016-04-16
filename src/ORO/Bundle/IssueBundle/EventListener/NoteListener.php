@@ -1,8 +1,7 @@
 <?php
 
-namespace Oro\Bundle\IssueBundle\EventListener;
+namespace ORO\Bundle\IssueBundle\EventListener;
 
-use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use Oro\Bundle\NoteBundle\Entity\Note;
 use Oro\Bundle\IssueBundle\Entity\Issue;

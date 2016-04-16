@@ -45,7 +45,7 @@ class IssueController extends RestController implements ClassResourceInterface
      */
     public function getFormHandler()
     {
-        return $this->get('form.handler.issue_api');
+        return $this->get('form.handler.api_issue');
     }
 
     /**

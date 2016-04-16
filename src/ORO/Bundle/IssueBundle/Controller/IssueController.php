@@ -4,13 +4,12 @@ namespace ORO\Bundle\IssueBundle\Controller;
 
 use ORO\Bundle\IssueBundle\Entity\Issue;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Oro\Bundle\IssueBundle\Entity\IssuePriority;
-use Oro\Bundle\IssueBundle\Entity\IssueResolution;
 use Oro\Bundle\NavigationBundle\Annotation\TitleTemplate;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Oro\Bundle\SecurityBundle\Annotation\Acl;
 use Oro\Bundle\SecurityBundle\Annotation\AclAncestor;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @Route("/issue")
@@ -34,7 +33,7 @@ class IssueController extends Controller
     {
         /** @var Issue $issue */
         $issue = new Issue();
-        $issue.setReporter($this->getUser());
+        $issue->setReporter($this->getUser());
         $assigneeId = $request->query->get('assigneeId');
         if ($assigneeId && $assignee = $this->getDoctrine()->getRepository('OroUserBundle:User')->find($assigneeId)) {
             $issue->setAssignee($assignee);

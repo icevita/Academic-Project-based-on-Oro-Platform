@@ -26,8 +26,10 @@ use Oro\Bundle\EntityConfigBundle\Metadata\Annotation\ConfigField;
 class Resolution
 {
     /**
+     * @var integer
+     *
      * @ORM\Id
-     * @ORM\Column(type="integer")
+     * @ORM\Column(name="id", type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
@@ -48,15 +50,9 @@ class Resolution
      */
     protected $name;
 
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="priority", type="integer")
-     */
-    protected $priority;
 
     /**
-     * @return int
+     * @return integer
      */
     public function getId()
     {
@@ -78,25 +74,6 @@ class Resolution
     public function setName($name)
     {
         $this->name = $name;
-
-        return $this;
-    }
-
-    /**
-     * @return int
-     */
-    public function getPriority()
-    {
-        return $this->priority;
-    }
-
-    /**
-     * @param int $priority
-     * @return $this
-     */
-    public function setPriority($priority)
-    {
-        $this->priority = $priority;
 
         return $this;
     }

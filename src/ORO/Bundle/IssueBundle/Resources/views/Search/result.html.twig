@@ -14,7 +14,7 @@
 
 {% set entityInfo = [
 {'title': 'oro.issue.type.label'|trans, 'value': entity.type? entity.type : 'N/A'},
-{'title': 'oro.issue.priority.label'|trans, 'value': entity.priority.label ? entity.priority.label : 'N/A'},
+{'title': 'oro.issue.priority.label'|trans, 'value': entity.priority.name ? entity.priority.name : 'N/A'},
 {'title': 'oro.issue.workflow_step.label'|trans, 'value': entity.workflowStep ? entity.workflowStep : 'N/A'},
 {'title': 'oro.issue.reporter.label'|trans, 'value': entity.reporter.firstName ~ ' ' ~ entity.reporter.lastName},
 {'title': 'oro.issue.assignee.label'|trans, 'value': entity.assignee.firstName ~ ' ' ~ entity.assignee.lastName},

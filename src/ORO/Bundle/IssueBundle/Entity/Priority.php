@@ -58,7 +58,7 @@ class Priority
     protected $priority;
 
     /**
-     * @return int
+     * @return integer
      */
     public function getId()
     {
