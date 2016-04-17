@@ -54,18 +54,18 @@ class LoadIssueData extends AbstractFixture
         ],
         [
             'code'     => 'TT-0007',
-            'summary'  => 'Sub-task(TT-0006)',
+            'summary'  => 'Sub-task(TT-0001)',
             'type'     => 'Subtask',
             'priority' => 'High',
-            'parent'   => 'TT-0006',
+            'parent'   => 'TT-0001',
             'related'  => ['TT-0005']
         ],
         [
             'code'     => 'TT-0008',
-            'summary'  => 'Sub-task(TT-0004)',
+            'summary'  => 'Sub-task(TT-0001)',
             'type'     => 'Subtask',
             'priority' => 'Low',
-            'parent'   => 'TT-0004'
+            'parent'   => 'TT-0001'
         ],
     ];
 
