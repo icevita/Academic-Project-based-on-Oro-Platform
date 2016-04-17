@@ -781,4 +781,11 @@ class Issue extends ExtendIssue implements DatesAwareInterface
         return $this->organization;
     }
 
+    /**
+     * @return string
+     */
+    public function __toString()
+    {
+        return (string)$this->getCode();
+    }
 }
