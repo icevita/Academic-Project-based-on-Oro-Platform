@@ -3,10 +3,17 @@ oro_menu_config:
         issues:
             label: 'oro.issue.menu.label'
             route: 'issue_index'
+            routeParameters:
+                reportGroupName: issues
+                reportName:      issues
+
 
     tree:
         application_menu:
             children:
                 activities_tab:
+                    children:
+                        issues: ~
+                reports_tab:
                     children:
                         issues: ~
