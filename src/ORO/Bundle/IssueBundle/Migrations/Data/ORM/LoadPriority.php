@@ -1,6 +1,6 @@
 <?php
 
-namespace Academic\BtsBundle\Migrations\Data\ORM;
+namespace ORO\Bundle\IssueBundle\Migrations\Data\ORM;
 
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\Persistence\ObjectManager;

@@ -10,7 +10,7 @@
             'entity_label': 'oro.issue.entity_label'|trans
         }) }}
 
-        {% if issue.issueType == '%issue.types.Story%' %}
+        {% if issue.type == 'Story' %}
             {{ UI.button({
                 'path' : path('issue_create', { parent: issue.id }),
                 'label': 'oro.subissue.entity_label'|trans
@@ -45,8 +45,8 @@
         <div class="widget-content">
             <div class="row-fluid form-horizontal">
                 <div class="responsive-block">
-                    {{ UI.renderProperty('oro.issue.summary.label'|trans, issue.summary) }}
                     {{ UI.renderProperty('oro.issue.code.label'|trans, issue.code) }}
+                    {{ UI.renderProperty('oro.issue.summary.label'|trans, issue.summary) }}
                     {{ UI.renderProperty('oro.issue.type.label'|trans, issue.type) }}
                     {{ UI.renderHtmlProperty('oro.issue.description.label'|trans, issue.description|nl2br) }}
                     {{ UI.renderProperty('oro.ui.created_at'|trans, issue.createdAt|oro_format_datetime) }}
@@ -97,7 +97,7 @@
         }] ) %}
     {% endif %}
 
-    {% if issue.type == '%issue.types.Story%' %}
+    {% if issue.type == 'Story' %}
         {% set dataBlocks = dataBlocks|merge([{
         'title': 'oro.subissue.entity_plural_label'|trans,
         'subblocks': [{

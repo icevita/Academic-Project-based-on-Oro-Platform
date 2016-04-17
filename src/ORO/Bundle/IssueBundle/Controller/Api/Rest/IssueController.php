@@ -2,7 +2,6 @@
 
 namespace ORO\Bundle\IssueBundle\Controller\Api\Rest;
 
-
 use FOS\RestBundle\Controller\Annotations\NamePrefix;
 use FOS\RestBundle\Controller\Annotations\QueryParam;
 use FOS\RestBundle\Routing\ClassResourceInterface;
@@ -18,7 +17,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 /**
  * @RouteResource("Issue")
- * @NamePrefix("oro_api_")
+ * @NamePrefix("api_")
  */
 class IssueController extends RestController implements ClassResourceInterface
 {
@@ -148,7 +147,7 @@ class IssueController extends RestController implements ClassResourceInterface
      *      id="issue_delete",
      *      type="entity",
      *      permission="DELETE",
-     *      class="OroAcademicIssueBundle:Issue"
+     *      class="OROIssueBundle:Issue"
      * )
      */
     public function deleteAction($id)

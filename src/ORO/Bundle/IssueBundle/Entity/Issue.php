@@ -18,6 +18,7 @@ use Oro\Bundle\WorkflowBundle\Entity\WorkflowStep;
  *
  * @ORM\Table(name="issue")
  * @ORM\HasLifecycleCallbacks()
+ * @ORM\EntityListeners({"ORO\Bundle\IssueBundle\EventListener\IssueListener"})
  * @ORM\Entity(repositoryClass="ORO\Bundle\IssueBundle\Entity\Repository\IssueRepository")
  * @Config(
  *      routeName="issue_index",
@@ -39,6 +40,9 @@ use Oro\Bundle\WorkflowBundle\Entity\WorkflowStep;
  *          },
  *          "tag"={
  *              "enabled"=true
+ *          },
+ *          "grid"={
+ *              "default"="issues-grid",
  *          },
  *          "security"={
  *              "type"="ACL",

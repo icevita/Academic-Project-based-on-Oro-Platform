@@ -1,7 +1,7 @@
 datagrid:
     issues-grid:
         source:
-            acl_resource: issue_view
+            acl_resource: issue_index
             type: orm
             query:
                 select:
@@ -13,19 +13,13 @@ datagrid:
                     - priority.name as priorityName
                     - resolution.name as resolutionName
                     - assignee.id as assigneeId
-                    - CONCAT(assignee.firstName, CONCAT(' ', assignee.lastName)) as assigneeFullName
+                    - CONCAT(assignee.firstName, ' ', assignee.lastName) as assigneeFullName
                     - reporter.id as reporterId
-                    - CONCAT(reporter.firstName, CONCAT(' ', reporter.lastName)) as reporterFullName
+                    - CONCAT(reporter.firstName, ' ', reporter.lastName) as reporterFullName
                     - issue.createdAt
                     - issue.updatedAt
-                    - >
-                        (CASE WHEN (:user MEMBER OF issue.collaborators) THEN
-                            true
-                        ELSE
-                            false
-                        END) as userInCollaborators
                 from:
-                    - { table: InventoryBundle:Issue, alias: issue }
+                    - { table: OROIssueBundle:Issue, alias: issue }
                 join:
                     left:
                         - { join: issue.priority, alias: priority }
@@ -33,13 +27,16 @@ datagrid:
                         - { join: issue.assignee, alias: assignee }
                         - { join: issue.reporter, alias: reporter }
                         - { join: issue.workflowStep, alias: workflowStep }
-                        - { join: issue.collaborators, alias: collaborator }
+                        - { join: issue.collaborators, alias: collaborators }
+        inline_editing:
+            enable: true
+            entity_name: ORO\Bundle\IssueBundle\Entity\Issue
         columns:
             code:
                 label: oro.issue.code.label
             summary:
                 label: oro.issue.summary.label
-            issueType:
+            type:
                 label: oro.issue.type.label
             workflowStepLabel:
                 label: oro.issue.workflow_step.label
@@ -49,20 +46,17 @@ datagrid:
                 label: oro.issue.resolution.label
             reporterFullName:
                 label: oro.issue.reporter.label
-                type:  twig
-                frontend_type: html
-                template: OROIssueBundle:Issue:Datagrid/Property/reporter.html.twig
             assigneeFullName:
                 label: oro.issue.assignee.label
-                type:  twig
-                frontend_type: html
-                template: OROIssueBundle:Issue:Datagrid/Property/assignee.html.twig
             createdAt:
                 label: oro.ui.created_at
                 frontend_type: datetime
             updatedAt:
                 label: oro.ui.updated_at
                 frontend_type: datetime
+            collaborators:
+                label: oro.issue.collaborators.label
+                renderable: false
         sorters:
             columns:
                 code:
@@ -99,11 +93,23 @@ datagrid:
                               choices: '%issue.types%'
                 collaborators:
                     type: entity
-                    data_name: collaborator.id
+                    data_name: collaborators.id
                     options:
                         field_options:
                             class: OroUserBundle:User
                             translatable_options: false
+                priority:
+                    type: string
+                    data_name: issue.priority
+                resolution:
+                    type: string
+                    data_name: issue.resolution
+                reporter:
+                    type: string
+                    data_name: issue.reporter
+                assignee:
+                    type: string
+                    data_name: issue.assignee
                 createdAt:
                     type:      datetime
                     data_name: issue.createdAt

@@ -1,6 +1,6 @@
 <?php
 
-namespace ORO\IssueBundle\Migrations\Data\Demo\ORM;
+namespace ORO\Bundle\IssueBundle\Migrations\Data\Demo\ORM;
 
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -8,7 +8,7 @@ use Oro\Bundle\NoteBundle\Entity\Note;
 use Oro\Bundle\UserBundle\Entity\User;
 use ORO\Bundle\IssueBundle\Entity\Issue;
 
-class LoadIssueData extends AbstractFixture
+class LoadIssueDemoData extends AbstractFixture
 {
     /**
      * @var array

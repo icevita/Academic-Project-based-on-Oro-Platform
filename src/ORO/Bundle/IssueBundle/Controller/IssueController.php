@@ -101,6 +101,7 @@ class IssueController extends Controller
     {
         return [
             'entity_class' => $this->container->getParameter('issue.entity.class'),
+            'gridName' => 'issues-grid'
         ];
     }
 
