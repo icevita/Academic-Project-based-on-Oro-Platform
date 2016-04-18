@@ -44,8 +44,11 @@ oro:
 
         user_issues:
           label: Issues
+        view_all: 'View All'
 
     subissue:
         entity_label:               Sub-Task
         entity_plural_label:        Sub-Tasks
         parent_story:               Parent Story
+
+

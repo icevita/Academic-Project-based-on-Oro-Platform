@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: ice_vita
- * Date: 4/14/16
- * Time: 01:55
- */
 
 
 namespace ORO\Bundle\IssueBundle\Migrations\Schema\v1_1;

@@ -13,6 +13,7 @@ use FOS\RestBundle\Controller\Annotations\RouteResource;
 use Oro\Bundle\SoapBundle\Entity\Manager\ApiEntityManager;
 use Oro\Bundle\SoapBundle\Form\Handler\ApiFormHandler;
 use Symfony\Component\Form\FormInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -71,12 +72,13 @@ class IssueController extends RestController implements ClassResourceInterface
      *      }
      * )
      * @AclAncestor("issue_view")
+     * @param Request $request
      * @return Response
      */
-    public function cgetAction()
+    public function cgetAction(Request $request)
     {
-        $page = (int)$this->get('request_stack')->getCurrentRequest()->get('page', 1);
-        $limit = (int)$this->get('request_stack')->getCurrentRequest()->get('limit', self::ITEMS_PER_PAGE);
+        $page = (int)$request->get('page', 1);
+        $limit = (int)$request->get('limit', self::ITEMS_PER_PAGE);
         $criteria = $this->getFilterCriteria($this->getSupportedQueryParameters(__FUNCTION__));
 
         return $this->handleGetListRequest($page, $limit, $criteria);
@@ -128,8 +130,6 @@ class IssueController extends RestController implements ClassResourceInterface
      */
     public function postAction()
     {
-        $request = $this->get('request_stack')->getCurrentRequest();
-
         return $this->handleCreateRequest();
     }
 
@@ -144,7 +144,7 @@ class IssueController extends RestController implements ClassResourceInterface
      *      resource=true
      * )
      * @Acl(
-     *      id="issue_delete",
+     *      id="delete_issue",
      *      type="entity",
      *      permission="DELETE",
      *      class="OROIssueBundle:Issue"

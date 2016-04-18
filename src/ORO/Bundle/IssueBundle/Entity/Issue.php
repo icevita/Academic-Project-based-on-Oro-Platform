@@ -39,10 +39,14 @@ use Oro\Bundle\WorkflowBundle\Entity\WorkflowStep;
  *              "auditable"=true
  *          },
  *          "tag"={
- *              "enabled"=true
+ *              "enabled"=true,
+ *              "enableGridColumn"=true
  *          },
  *          "grid"={
  *              "default"="issues-grid",
+ *          },
+ *          "note"={
+ *              "enabled"=true
  *          },
  *          "security"={
  *              "type"="ACL",
@@ -656,6 +660,10 @@ class Issue extends ExtendIssue implements DatesAwareInterface
         $this->childrens->removeElement($children);
     }
 
+    public function getOwner()
+    {
+        return $this->reporter;
+    }
 
     /**
      * @return Issue

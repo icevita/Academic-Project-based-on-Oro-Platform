@@ -61,7 +61,7 @@ class IssueController extends Controller
         return $this->update($issue, $request);
     }
 
-    private function update(Issue $issue, Request $request)
+    private function update(Issue $issue)
     {
         $issueHandler = $this->get('form.handler.issue');
         if ($issueHandler->process($issue, $this->getUser())) {
@@ -74,7 +74,9 @@ class IssueController extends Controller
                     'route' => 'issue_update',
                     'parameters' => array('id' => $issue->getId()),
                 ),
-                array('route' => 'issue_index'),
+                array('route' => 'issue_view',
+                      'parameters' => array('id' => $issue->getId())
+                ),
                 $issue
             );
         }
@@ -115,18 +117,7 @@ class IssueController extends Controller
      */
     public function viewAction(Issue $issue)
     {
-        return array('issue' => $issue);
+        return array('entity' => $issue);
     }
-
-    /**
-     * @Route("/user/{userId}", name="user_issues", requirements={"userId"="\d+"})
-     * @AclAncestor("issue_view")
-     * @Template
-     * @param int $userId
-     * @return array
-     */
-    public function issuesAction($userId)
-    {
-        return ['userId' => $userId];
-    }
+    
 }

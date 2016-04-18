@@ -8,6 +8,16 @@ use ORO\Bundle\IssueBundle\Entity\Issue;
 
 class IssueListener
 {
+    private $sender;
+
+    /**
+     * @param TopicSender $container
+     */
+    public function __construct(TopicSender $sender)
+    {
+        $this->sender = $sender;
+    }
+
     /**
      * Send Issue collection tag to publisher
      *
@@ -17,8 +27,6 @@ class IssueListener
     public function postUpdate(Issue $issue, LifecycleEventArgs $event)
     {
         $data = ['name' => 'entity_issue_changes'];
-        /** @var TopicSender $sender */
-        $sender = $this->get('oro_navigation.content.topic_sender');
-        $sender->send($sender->getGenerator()->generate($data));
+        $this->sender->send($this->sender->getGenerator()->generate($data));
     }
 }

@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: ice_vita
- * Date: 3/23/16
- * Time: 00:14
- */
 
 namespace Oro\Bundle\IssueBundle\Entity\Repository;
 

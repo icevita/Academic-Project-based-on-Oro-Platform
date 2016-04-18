@@ -98,16 +98,16 @@ datagrid:
                         field_options:
                             class: OroUserBundle:User
                             translatable_options: false
-                priority:
+                priorityName:
                     type: string
                     data_name: issue.priority
-                resolution:
+                resolutionName:
                     type: string
                     data_name: issue.resolution
-                reporter:
+                reporterFullName:
                     type: string
                     data_name: issue.reporter
-                assignee:
+                assigneeFullName:
                     type: string
                     data_name: issue.assignee
                 createdAt:
@@ -128,7 +128,7 @@ datagrid:
                 params:     [ id ]
             delete_link:
                 type:       url
-                route:      api_issue_delete
+                route:      api_delete_issue
                 params:     [ id ]
         actions:
             view:
