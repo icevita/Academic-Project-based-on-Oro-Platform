@@ -34,9 +34,21 @@ class IssueController extends Controller
         /** @var Issue $issue */
         $issue = new Issue();
         $issue->setReporter($this->getUser());
-        $assigneeId = $request->query->get('assigneeId');
+        $assigneeId = $request->query->get('assignee');
         if ($assigneeId && $assignee = $this->getDoctrine()->getRepository('OroUserBundle:User')->find($assigneeId)) {
             $issue->setAssignee($assignee);
+        }
+
+        if ($parentId = $request->query->getInt('parent')) {
+            $issueTypes = $this->container->getParameter('issue.types');
+            $parent = $this->getDoctrine()->getRepository('OROIssueBundle:Issue')
+                ->findOneBy([
+                    'id' => $parentId,
+                    'type' => $issueTypes['story']
+                ]);
+            if ($parent) {
+                $issue->setParent($parent)->setType($issueTypes['subtask']);
+            }
         }
 
         return $this->update($issue, $request);

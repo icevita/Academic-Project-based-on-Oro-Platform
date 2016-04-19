@@ -4,8 +4,8 @@ oro_menu_config:
             label: 'oro.issue.menu.label'
             route: 'issue_index'
         issues_report:
-            label: 'oro.issue.menu.label'
-            route: 'issue_index'
+            label: 'oro.issue.report'
+            route: 'oro_report_index'
             routeParameters:
                 reportGroupName: issues
                 reportName:      issues

@@ -63,11 +63,6 @@ use Oro\Bundle\WorkflowBundle\Entity\WorkflowStep;
  */
 class Issue extends ExtendIssue implements DatesAwareInterface
 {
-    const TYPE_BUG = 'Bug';
-    const TYPE_SUBTASK = 'Subtask';
-    const TYPE_TASK = 'Task';
-    const TYPE_STORY = 'Story';
-
     /**
      * @var integer
      *

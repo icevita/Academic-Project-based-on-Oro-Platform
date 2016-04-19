@@ -6,27 +6,27 @@ definitions:
         entity: ORO\Bundle\IssueBundle\Entity\Issue
         actions_configuration:
             - @call_method:
-                            parameters:
-                                object: $.data
-                                method: addCollaborator
-                                method_parameters: [$.data.reporter]
+                parameters:
+                    object: $.data
+                    method: addCollaborator
+                    method_parameters: [$.data.reporter]
             - @call_method:
-                            parameters:
-                                object: $.data
-                                method: addCollaborator
-                                method_parameters: [$.data.assignee]
+                parameters:
+                    object: $.data
+                    method: addCollaborator
+                    method_parameters: [$.data.assignee]
     oro_note_collaborators:
         label: 'Note Collaborators Definition'
         enabled: true
         entity: Oro\Bundle\NoteBundle\Entity\Note
         actions_configuration:
             - @call_method:
-                            conditions:
-                                 @equal: [$.data.target.class, 'ORO\Bundle\IssueBundle\Entity\Issue']
-                            parameters:
-                                 object: $.data.target
-                                 method: addCollaborator
-                                 method_parameters: [$.data.owner]
+                conditions:
+                     @instanceof: [$.data.target, 'ORO\Bundle\IssueBundle\Entity\Issue']
+                parameters:
+                     object: $.data.target
+                     method: addCollaborator
+                     method_parameters: [$.data.owner]
 
 triggers:
 

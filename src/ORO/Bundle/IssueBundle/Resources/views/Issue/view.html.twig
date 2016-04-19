@@ -67,7 +67,7 @@
                     {%- endset -%}
                     {{ UI.renderHtmlProperty('oro.issue.reporter.label'|trans, reporterData) }}
 
-                    {% if entity.parent is not empty %}
+                    {% if entity.parent %}
                         <a href="{{ path('issue_view', {'id': entity.parent.id}) }}">{{ UI.renderProperty('oro.subissue.parent_story'|trans, entity.parent.code) }}</a>
                     {% endif %}
                 </div>

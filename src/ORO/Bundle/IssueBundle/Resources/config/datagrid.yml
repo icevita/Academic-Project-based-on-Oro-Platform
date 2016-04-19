@@ -1,5 +1,6 @@
 datagrid:
     issues-grid:
+        pageTitle: oro.issue.report
         source:
             acl_resource: issue_index
             type: orm

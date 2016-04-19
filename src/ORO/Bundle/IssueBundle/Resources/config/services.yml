@@ -1,10 +1,10 @@
 parameters:
   issue.entity.class: ORO\Bundle\IssueBundle\Entity\Issue
   issue.types:
-        Bug: Bug
-        Task: Task
-        Subtask: Subtask
-        Story: Story
+        bug: Bug
+        task: Task
+        subtask: Subtask
+        story: Story
 
 services:
     issue.manager.api:

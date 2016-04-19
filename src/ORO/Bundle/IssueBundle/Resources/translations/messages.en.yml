@@ -1,5 +1,6 @@
 oro:
     issue:
+        report: Issue Report
         menu:
             label:  Issues
             issue_create: Create Issue
