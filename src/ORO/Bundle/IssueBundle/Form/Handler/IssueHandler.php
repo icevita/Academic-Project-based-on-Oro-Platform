@@ -34,18 +34,18 @@ class IssueHandler
     /**
      * Process form
      *
-     * @param Issue $entity
+     * @param Issue $issue
      * @param \Oro\Bundle\UserBundle\Entity\User $currentUser
      * @return bool  True on successful processing, false otherwise
      */
-    public function process(Issue $entity, $currentUser)
+    public function process(Issue $issue, $currentUser)
     {
-        $this->checkForm($entity, $currentUser);
-        $this->form->setData($entity);
+        $this->checkForm($issue, $currentUser);
+        $this->form->setData($issue);
         if (in_array($this->request->getMethod(), ['POST', 'PUT'])) {
             $this->form->submit($this->request);
             if ($this->form->isValid()) {
-                $this->onSuccess($entity);
+                $this->onSuccess($issue);
 
                 return true;
             }
@@ -76,15 +76,15 @@ class IssueHandler
     }
 
     /**
-     * @param Issue $entity
+     * @param Issue $issue
      * @param $currentUser
      */
-    protected function checkForm(Issue $entity, $currentUser)
+    protected function checkForm(Issue $issue, $currentUser)
     {
-        if ($entity->getId() || $entity->getParent()) {
+        if ($issue->getId() || $issue->getParent()) {
             $this->form->remove('type');
         } else {
-            $entity
+            $issue
                 ->setReporter($currentUser)
                 ->setAssignee($currentUser);
         }

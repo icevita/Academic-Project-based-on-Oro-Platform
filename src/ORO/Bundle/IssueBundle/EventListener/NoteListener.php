@@ -11,12 +11,10 @@ class NoteListener
     public function postPersist(LifecycleEventArgs $args)
     {
         $entity = $args->getEntity();
-        if (is_a($entity, Note::class)) {
+        if ($entity instanceof Note) {
             /** @var Issue $issue */
             $issue = $entity->getTarget();
-            if (is_a($issue, Issue::class)) {
-                $issue->setUpdatedAt(new \DateTime('now', new \DateTimeZone('UTC')));
-            }
+            $issue->setUpdatedAt(new \DateTime('now', new \DateTimeZone('UTC')));
         }
     }
 }

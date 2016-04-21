@@ -77,10 +77,6 @@ class IssueController extends Controller
     {
         $issueHandler = $this->get('form.handler.issue');
         if ($issueHandler->process($issue, $this->getUser())) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($issue);
-            $entityManager->flush();
-
             return $this->get('oro_ui.router')->redirectAfterSave(
                 array(
                     'route' => 'issue_update',

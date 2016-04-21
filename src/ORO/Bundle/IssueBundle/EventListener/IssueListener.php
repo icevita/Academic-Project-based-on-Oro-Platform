@@ -11,7 +11,7 @@ class IssueListener
     private $sender;
 
     /**
-     * @param TopicSender $container
+     * @param TopicSender $sender
      */
     public function __construct(TopicSender $sender)
     {
