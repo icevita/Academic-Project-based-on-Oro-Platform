@@ -683,7 +683,7 @@ class Issue extends ExtendIssue implements DatesAwareInterface
 
     /**
      * @param WorkflowItem $workflowItem
-     * @return Opportunity
+     * @return Issue
      */
     public function setWorkflowItem($workflowItem)
     {
@@ -702,7 +702,7 @@ class Issue extends ExtendIssue implements DatesAwareInterface
 
     /**
      * @param WorkflowItem $workflowStep
-     * @return Opportunity
+     * @return Issue
      */
     public function setWorkflowStep($workflowStep)
     {
@@ -741,16 +741,6 @@ class Issue extends ExtendIssue implements DatesAwareInterface
     public function getRelatedIssues()
     {
         return $this->relatedIssues;
-    }
-
-    /**
-     * Remove relatedIssue
-     *
-     * @param Issue $relatedIssue
-     */
-    public function removeRelatedIssue(Issue $relatedIssue)
-    {
-        $this->relatedIssues->removeElement($relatedIssue);
     }
 
     /**
