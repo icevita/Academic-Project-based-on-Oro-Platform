@@ -12,6 +12,11 @@ use Oro\Bundle\ActivityBundle\Migration\Extension\ActivityExtensionAwareInterfac
 
 class OROIssueEmailActivity implements Migration, ActivityExtensionAwareInterface
 {
+    public function getMigrationVersion()
+    {
+        return 'v1_2';
+    }
+
     /** @var ActivityExtension */
     protected $activityExtension;
 
@@ -39,6 +44,6 @@ class OROIssueEmailActivity implements Migration, ActivityExtensionAwareInterfac
      */
     public static function addActivityAssociations(Schema $schema, ActivityExtension $activityExtension)
     {
-        $activityExtension->addActivityAssociation($schema, 'oro_email', 'oro_issue', true);
+        $activityExtension->addActivityAssociation($schema, 'oro_email', 'issue', true);
     }
 }

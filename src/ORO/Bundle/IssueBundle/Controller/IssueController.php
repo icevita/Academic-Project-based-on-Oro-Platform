@@ -77,6 +77,11 @@ class IssueController extends Controller
     {
         $issueHandler = $this->get('form.handler.issue');
         if ($issueHandler->process($issue, $this->getUser())) {
+            $this->get('session')->getFlashBag()->add(
+                'success',
+                $this->get('translator')->trans('oro.issue.saved_message')
+            );
+
             return $this->get('oro_ui.router')->redirectAfterSave(
                 array(
                     'route' => 'issue_update',

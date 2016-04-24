@@ -15,6 +15,8 @@ class DashboardController extends Controller
      *      requirements={"widget"="[\w-]+"}
      * )
      * @Template("OROIssueBundle:Dashboard:issuesByStatus.html.twig")
+     * @param $widget
+     * @return array
      */
     public function issuesStatusAction($widget)
     {
@@ -29,10 +31,9 @@ class DashboardController extends Controller
                     'name'        => 'bar_chart',
                     'data_schema' => [
                         'label' => ['field_name' => 'label'],
-                        'value' => [
-                            'field_name' => 'issues'
-                        ]
+                        'value' => ['field_name' => 'issues_count']
                     ],
+                    'settings' => array('xNoTicks' => count($items)),
                 ]
             )
             ->getView();
@@ -49,7 +50,7 @@ class DashboardController extends Controller
      * @param $widget
      * @return array $widgetAttr
      */
-    public function issueAction($widget)
+    public function issuesAction($widget)
     {
         $widgetAttr = $this->get('oro_dashboard.widget_configs')->getWidgetAttributesForTwig($widget);
         $widgetAttr['user'] = $this->getUser();

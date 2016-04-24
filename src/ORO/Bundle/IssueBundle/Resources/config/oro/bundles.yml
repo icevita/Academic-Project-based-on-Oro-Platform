@@ -1,2 +1,2 @@
 bundles:
-    - ORO\Bundle\IssueBundle\OROIssueBundle
+  - { name: ORO\Bundle\IssueBundle\OROIssueBundle, priority: 10000}

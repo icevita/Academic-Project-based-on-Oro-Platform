@@ -19,7 +19,7 @@ class OROIssueNote implements Migration, NoteExtensionAwareInterface
      */
     public function getMigrationVersion()
     {
-        return 'v1_2';
+        return 'v1_1';
     }
 
     /**
