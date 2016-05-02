@@ -2,7 +2,8 @@ datagrid:
     issues-grid:
         pageTitle: oro.issue.report
         source:
-            acl_resource: issue_index
+            extended_entity_name: ORO\Bundle\IssueBundle\Entity\Issue
+            acl_resource: issue_view
             type: orm
             query:
                 select:
@@ -66,6 +67,12 @@ datagrid:
                     data_name: issue.summary
                 type:
                     data_name: issue.type
+                workflowStepLabel:
+                    data_name: workflowStep.stepOrder
+                priorityName:
+                    data_name: priority.name
+                resolutionName:
+                    data_name: resolution.name
                 reporterFullName:
                     data_name: reporterFullName
                 assigneeFullName:
@@ -75,7 +82,7 @@ datagrid:
                 updatedAt:
                     data_name: issue.updatedAt
             default:
-                createdAt: DESC
+                updatedAt: DESC
         filters:
             columns:
                 code:
@@ -100,8 +107,15 @@ datagrid:
                             class: OroUserBundle:User
                             translatable_options: false
                 priorityName:
-                    type: string
-                    data_name: issue.priority
+                    label: oro.issue.priority.label
+                    type: entity
+                    data_name: priority.name
+                    options:
+                        field_options:
+                              class: OROIssueBundle:Priority
+                              multiple: true
+                              property: name
+                              translatable_options: false
                 resolutionName:
                     type: string
                     data_name: issue.resolution
@@ -119,10 +133,11 @@ datagrid:
                     data_name: issue.updatedAt
         properties:
             id: ~
+            owner: ~
             view_link:
-                type:       url
-                route:      issue_view
-                params:     [ id ]
+                type: url
+                route: issue_view
+                params: [ id ]
             update_link:
                 type:       url
                 route:      issue_update
@@ -132,27 +147,25 @@ datagrid:
                 route:      api_delete_issue
                 params:     [ id ]
         actions:
-            view:
+            view_issue:
                 type:          navigate
                 acl_resource:  issue_view
                 label:         oro.grid.action.view
                 icon:          eye-open
                 link:          view_link
                 rowAction:     true
-            update:
+            update_issue:
                 type:          navigate
                 acl_resource:  issue_create
                 label:         oro.grid.action.update
                 icon:          edit
                 link:          update_link
-                rowAction:     true
-            delete:
+            delete_issue:
                 type:          delete
                 acl_resource:  issue_delete
                 label:         oro.grid.action.delete
                 icon:          trash
                 link:          delete_link
-                rowAction:     true
     subtask-issues-grid:
             extends: issues-grid
             source:

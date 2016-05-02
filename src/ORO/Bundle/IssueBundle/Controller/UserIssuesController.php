@@ -22,6 +22,9 @@ class UserIssuesController extends Controller
      */
     public function issuesAction($userId)
     {
-        return ['userId' => $userId];
+        return [
+            'userId' => $userId,
+            'entity' => $this->getUser()
+        ];
     }
 }

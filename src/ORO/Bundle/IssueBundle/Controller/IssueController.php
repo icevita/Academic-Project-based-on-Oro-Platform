@@ -43,7 +43,7 @@ class IssueController extends Controller
             $issueTypes = $this->container->getParameter('issue.types');
             $parent = $this->getDoctrine()->getRepository('OROIssueBundle:Issue')
                 ->findOneBy([
-                    'id' => $parentId,
+                    'id'   => $parentId,
                     'type' => $issueTypes['story']
                 ]);
             if ($parent) {
@@ -51,7 +51,8 @@ class IssueController extends Controller
             }
         }
 
-        return $this->update($issue, $request);
+        $formAction = $this->get('router')->generate('issue_create', $this->getRequest());
+        return $this->update($issue, $formAction);
     }
 
     /**
@@ -70,10 +71,11 @@ class IssueController extends Controller
      */
     public function updateAction(Issue $issue, Request $request)
     {
-        return $this->update($issue, $request);
+        $formAction = $this->get('router')->generate('issue_update', ['id' => $issue->getId()]);
+        return $this->update($issue, $formAction);
     }
 
-    private function update(Issue $issue)
+    private function update(Issue $issue, $formAction)
     {
         $issueHandler = $this->get('form.handler.issue');
         if ($issueHandler->process($issue, $this->getUser())) {
@@ -83,30 +85,31 @@ class IssueController extends Controller
             );
 
             return $this->get('oro_ui.router')->redirectAfterSave(
-                array(
-                    'route' => 'issue_update',
-                    'parameters' => array('id' => $issue->getId()),
-                ),
-                array('route' => 'issue_view',
-                      'parameters' => array('id' => $issue->getId())
-                ),
+                [
+                    'route'      => 'issue_update',
+                    'parameters' => ['id' => $issue->getId()],
+                ],
+                ['route'      => 'issue_view',
+                 'parameters' => ['id' => $issue->getId()]
+                ],
                 $issue
             );
         }
 
         $form = $issueHandler->getForm();
 
-        return array(
+        return [
             'entity' => $issue,
-            'form' => $form->createView(),
-        );
+            'form'   => $form->createView(),
+            'formAction' => $formAction
+        ];
     }
 
     /**
      * @Route("/", name="issue_index")
      * @Template
      * @Acl(
-     *      id="issue_index",
+     *      id="issue_view",
      *      type="entity",
      *      class="OROIssueBundle:Issue",
      *      permission="VIEW"
@@ -116,7 +119,7 @@ class IssueController extends Controller
     {
         return [
             'entity_class' => $this->container->getParameter('issue.entity.class'),
-            'gridName' => 'issues-grid'
+            'gridName'     => 'issues-grid'
         ];
     }
 
@@ -130,7 +133,7 @@ class IssueController extends Controller
      */
     public function viewAction(Issue $issue)
     {
-        return array('entity' => $issue);
+        return ['entity' => $issue];
     }
-    
+
 }

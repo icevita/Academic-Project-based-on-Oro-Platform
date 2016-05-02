@@ -7,7 +7,7 @@ oro:
             issue_update: Update Issue
             issue_view: View Issue
         action:
-            create: Create
+            create: Create Issue
         entity_label:               Issue
         entity_plural_label:        Issues
         code.label:                 Code
@@ -49,6 +49,7 @@ oro:
 
     subissue:
         entity_label:               Sub-Task
+        entity_label_add:           Add Sub-Task
         entity_plural_label:        Sub-Tasks
         parent_story:               Parent Story
 

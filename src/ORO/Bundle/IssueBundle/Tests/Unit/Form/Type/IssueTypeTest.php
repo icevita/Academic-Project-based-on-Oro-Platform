@@ -15,7 +15,7 @@ class IssueTypeTest extends \PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $this->type = new IssueType(['Bug','Story']);
+        $this->type = new IssueType(['bug','story']);
     }
 
     public function testBuildForm()

@@ -109,7 +109,7 @@ class Issue extends ExtendIssue implements DatesAwareInterface
     /**
      * @var string
      *
-     * @ORM\Column(type="text", nullable=true)
+     * @ORM\Column(type="text", nullable=true, unique=true)
      * @ConfigField(
      *      defaultValues={
      *          "importexport"={

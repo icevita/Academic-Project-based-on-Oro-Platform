@@ -17,7 +17,7 @@ class LoadIssueDemoData extends AbstractFixture
         [
             'code'     => 'TT-0001',
             'summary'  => 'Story 1',
-            'type'     => 'Story',
+            'type'     => 'story',
             'priority' => 'Low'
         ],
         [

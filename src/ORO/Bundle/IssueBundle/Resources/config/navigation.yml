@@ -20,3 +20,9 @@ oro_menu_config:
                 reports_tab:
                     children:
                         issues_report: ~
+
+oro_titles:
+    issue_index: ~
+    issue_view: '%%code%%'
+    issue_create: oro.ui.create_entity
+    issue_update: 'Update %%code%%'

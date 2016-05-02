@@ -144,7 +144,7 @@ class IssueController extends RestController implements ClassResourceInterface
      *      resource=true
      * )
      * @Acl(
-     *      id="delete_issue",
+     *      id="issue_delete",
      *      type="entity",
      *      permission="DELETE",
      *      class="OROIssueBundle:Issue"

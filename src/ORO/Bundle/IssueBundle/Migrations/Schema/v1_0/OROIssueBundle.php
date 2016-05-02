@@ -61,6 +61,7 @@ class OROIssueBundle implements Migration
         $table->addColumn('createdAt', 'datetime', []);
         $table->addColumn('updatedAt', 'datetime', []);
         $table->setPrimaryKey(['id']);
+        $table->addUniqueIndex(['code'], 'UNIQ_35B1ECC777153098');
         $table->addUniqueIndex(['workflow_item_id'], 'UNIQ_12AD233E1023C4EE');
         $table->addIndex(['priority_id'], 'IDX_12AD233E497B19F9', []);
         $table->addIndex(['resolution_id'], 'IDX_12AD233E12A1C43A', []);
