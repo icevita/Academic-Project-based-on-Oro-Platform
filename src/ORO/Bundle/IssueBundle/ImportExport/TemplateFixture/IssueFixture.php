@@ -40,7 +40,7 @@ class IssueFixture extends AbstractTemplateRepository implements TemplateFixture
     {
         if ($key == 'TI-0000') {
             $userRepository = $this->templateManager->getEntityRepository('Oro\Bundle\UserBundle\Entity\User');
-            $user = $userRepository->getEntity('John Doe');
+            $user = $userRepository->getEntity('John Doo'); //why not John Doe ...
             $organizationRepository = $this->templateManager
                 ->getEntityRepository('Oro\Bundle\OrganizationBundle\Entity\Organization');
             $priorityRepository     = $this->templateManager
@@ -54,8 +54,8 @@ class IssueFixture extends AbstractTemplateRepository implements TemplateFixture
             $entity->setReporter($user);
             $entity->setAssignee($user);
             $entity->setOrganization($organizationRepository->getEntity('default'));
-            $entity->setCreatedAt(new \DateTimeZone('UTC'));
-            $entity->setUpdatedAt(new \DateTimeZone('UTC'));
+            $entity->setCreatedAt(new \DateTime('now', new \DateTimeZone('UTC')));
+            $entity->setUpdatedAt(new \DateTime('now', new \DateTimeZone('UTC')));
 
             return;
         }

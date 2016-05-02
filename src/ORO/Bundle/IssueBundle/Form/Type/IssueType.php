@@ -16,6 +16,7 @@ class IssueType extends AbstractType
 
     public function __construct(array $types)
     {
+        unset($types['Subtask']);
         $this->types = $types;
     }
 

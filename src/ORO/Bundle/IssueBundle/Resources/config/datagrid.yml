@@ -211,9 +211,9 @@ datagrid:
                     query:
                         where:
                             and:
-                                - issue.assignee = :usserId or issue.reporter = :usserId
+                                - issue.assignee = :userId or issue.reporter = :userId
                     bind_parameters:
-                        - usserId
+                        - userId
                 filters: ~
                 options:
                     toolbarOptions:

@@ -44,7 +44,7 @@ oro:
           description: Recent Issues
 
         user_issues:
-          label: Issues
+          label: User Issues
         view_all: 'View All'
 
     subissue:

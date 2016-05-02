@@ -44,14 +44,15 @@ class IssueController extends Controller
             $parent = $this->getDoctrine()->getRepository('OROIssueBundle:Issue')
                 ->findOneBy([
                     'id'   => $parentId,
-                    'type' => $issueTypes['story']
+                    'type' => $issueTypes['Story']
                 ]);
             if ($parent) {
-                $issue->setParent($parent)->setType($issueTypes['subtask']);
+                $issue->setParent($parent)->setType($issueTypes['Subtask']);
             }
         }
+        $formAction = $this->get('oro_entity.routing_helper')->generateUrlByRequest('issue_create', $request);
 
-        $formAction = $this->get('router')->generate('issue_create', $this->getRequest());
+
         return $this->update($issue, $formAction);
     }
 
@@ -71,7 +72,8 @@ class IssueController extends Controller
      */
     public function updateAction(Issue $issue, Request $request)
     {
-        $formAction = $this->get('router')->generate('issue_update', ['id' => $issue->getId()]);
+        $formAction = $this->get('oro_entity.routing_helper')->generateUrlByRequest('issue_update', $request);
+
         return $this->update($issue, $formAction);
     }
 
@@ -99,8 +101,8 @@ class IssueController extends Controller
         $form = $issueHandler->getForm();
 
         return [
-            'entity' => $issue,
-            'form'   => $form->createView(),
+            'entity'     => $issue,
+            'form'       => $form->createView(),
             'formAction' => $formAction
         ];
     }
@@ -133,7 +135,10 @@ class IssueController extends Controller
      */
     public function viewAction(Issue $issue)
     {
-        return ['entity' => $issue];
+        return [
+            'entity' => $issue,
+            'user' => $this->getUser()
+        ];
     }
 
 }
