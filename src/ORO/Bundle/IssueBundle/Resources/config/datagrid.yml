@@ -185,9 +185,9 @@ datagrid:
                     query:
                         where:
                             and:
-                                - issue.id IN (:ids)
+                                - :id MEMBER OF issue.relatedIssues
                     bind_parameters:
-                        - ids
+                        - id
                 filters: ~
                 options:
                     toolbarOptions:
@@ -198,9 +198,18 @@ datagrid:
                     query:
                         where:
                             and:
-                                - u.id IN (:ids)
+                                - u.id = collaborators.id
+                        join:
+                            inner:
+                                -
+                                    join: OROIssueBundle:Issue
+                                    alias: issue
+                                    conditionType: WITH
+                                    condition: "issue.id = :id"
+                            left:
+                                -   { join: issue.collaborators, alias: collaborators }
                     bind_parameters:
-                        - ids
+                        - id
                 filters: ~
                 options:
                     toolbarOptions:

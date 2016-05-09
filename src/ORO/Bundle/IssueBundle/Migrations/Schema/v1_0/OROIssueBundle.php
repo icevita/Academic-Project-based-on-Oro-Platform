@@ -56,7 +56,7 @@ class OROIssueBundle implements Migration
         $table->addColumn('reporter_id', 'integer', ['notnull' => false]);
         $table->addColumn('summary', 'string', ['length' => 255]);
         $table->addColumn('code', 'string', ['length' => 25]);
-        $table->addColumn('description', 'text', ['notnull' => false]);
+        $table->addColumn('description', 'text', ['notnull' => false,'length' => 255]);
         $table->addColumn('issue_type', 'string', ['length' => 25]);
         $table->addColumn('createdAt', 'datetime', []);
         $table->addColumn('updatedAt', 'datetime', []);

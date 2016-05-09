@@ -26,6 +26,9 @@ class DashboardControllerTest extends WebTestCase
         );
         $result = $this->client->getResponse();
         $this->assertHtmlResponseStatusCodeEquals($result, 200);
+        $content = $result->getContent();
+        $this->assertContains('Issues by Status', $content);
+        $this->assertContains('Date range', $content);
     }
 
     public function testIssueWidget()
@@ -39,6 +42,9 @@ class DashboardControllerTest extends WebTestCase
         );
         $result = $this->client->getResponse();
         $this->assertHtmlResponseStatusCodeEquals($result, 200);
+        $content = $result->getContent();
+        $this->assertContains('Recent Issues', $content);
+        $this->assertContains('View All', $content);
     }
  
 }

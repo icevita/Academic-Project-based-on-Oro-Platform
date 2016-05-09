@@ -3,6 +3,8 @@ oro_menu_config:
         issues:
             label: 'oro.issue.menu.label'
             route: 'issue_index'
+            extras:
+                routes: ['issue_*']
         issues_report:
             label: 'oro.issue.report'
             route: 'oro_report_index'
@@ -23,6 +25,6 @@ oro_menu_config:
 
 oro_titles:
     issue_index: ~
-    issue_view: '%%code%%'
+    issue_view: '%%entity.code%%'
     issue_create: oro.ui.create_entity
-    issue_update: 'Update %%code%%'
+    issue_update: 'Update %%entity.code%%'

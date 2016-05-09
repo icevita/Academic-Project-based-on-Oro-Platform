@@ -4,7 +4,7 @@
 {% import 'OroUserBundle::macros.html.twig' as U %}
 {% import 'OroActivityBundle::macros.html.twig' as AC %}
 
-{% oro_title_set({params : {"%entity.code%": entity.summary|default('N/A') }}) %}
+{% oro_title_set({params : {"%entity.code%": entity.code|default('N/A') }}) %}
 
 {% block navButtons %}
     {% if resource_granted('EDIT', entity) %}
@@ -13,7 +13,7 @@
             'entity_label': 'oro.issue.entity_label'|trans
         }) }}
 
-        {% if entity.type|lower == 'story' %}
+        {% if entity.type == issue_types['Story']|trans %}
             {{ UI.button({
                 'path' : path('issue_create', { parent: entity.id }),
                 'label': 'oro.subissue.entity_label_add'|trans
@@ -45,8 +45,8 @@
 
 {% block breadcrumb %}
     {% set breadcrumbs = [
-    { label: 'oro.issue.entity_plural_label'|trans },
-    { label: 'oro.issue.menu.issue_view'|trans }
+        { label: 'oro.issue.entity_plural_label'|trans },
+        { label: 'oro.issue.menu.issue_view'|trans }
     ] %}
     {% include 'OroNavigationBundle:Menu:breadcrumbs.html.twig' %}
 {% endblock breadcrumb %}
@@ -87,63 +87,63 @@
         </div>
     {% endset %}
     {% set dataBlocks = [
-    {
-    'title': 'Data'|trans,
-    'class': 'active',
-    'subblocks': [
-    { 'data' : [data] }
-    ]
-    }
+        {
+            'title': 'Data'|trans,
+            'class': 'active',
+            'subblocks': [
+                { 'data' : [data] }
+            ]
+        }
     ] %}
 
 
     {% set dataBlocks = dataBlocks|merge([{
-    'title': 'oro.issue.user_issues.label'|trans,
-    'subblocks': [{
-    'title': '',
-    'useSpan': false,
-    'data' : [
-    dataGrid.renderGrid('user-issues-grid', {'userId': user.id})
-    ]
-    }]
+        'title': 'oro.issue.user_issues.label'|trans,
+        'subblocks': [{
+            'title': '',
+            'useSpan': false,
+            'data' : [
+                dataGrid.renderGrid('user-issues-grid', {'userId': user.id})
+            ]
+        }]
     }] ) %}
 
     {% if entity.relatedIssues is not null %}
         {% set dataBlocks = dataBlocks|merge([{
-        'title': 'oro.issue.related.label'|trans,
-        'subblocks': [{
-        'title': '',
-        'useSpan': false,
-        'data' : [
-        dataGrid.renderGrid('related-issues-grid', {'ids': entity.relatedIssues})
-        ]
-        }]
+            'title': 'oro.issue.related.label'|trans,
+            'subblocks': [{
+                'title': '',
+                'useSpan': false,
+                'data' : [
+                    dataGrid.renderGrid('related-issues-grid', {'id': entity.id})
+                ]
+            }]
         }] ) %}
     {% endif %}
 
-    {% if entity.type|lower == 'story' %}
+    {% if entity.type == issue_types['Story']|trans %}
         {% set dataBlocks = dataBlocks|merge([{
-        'title': 'oro.subissue.entity_plural_label'|trans,
-        'subblocks': [{
-        'title': '',
-        'useSpan': false,
-        'data' : [
-        dataGrid.renderGrid('subtask-issues-grid', {'parentId': entity.id})
-        ]
-        }]
+            'title': 'oro.subissue.entity_plural_label'|trans,
+            'subblocks': [{
+                'title': '',
+                'useSpan': false,
+                'data' : [
+                    dataGrid.renderGrid('subtask-issues-grid', {'parentId': entity.id})
+                ]
+            }]
         }] ) %}
     {% endif %}
 
     {% if entity.collaborators is not null %}
         {% set dataBlocks = dataBlocks|merge([{
-        'title': 'oro.issue.collaborators.label'|trans,
-        'subblocks': [{
-        'title': '',
-        'useSpan': false,
-        'data' : [
-        dataGrid.renderGrid('collaborators-grid', {'ids': entity.collaborators})
-        ]
-        }]
+            'title': 'oro.issue.collaborators.label'|trans,
+            'subblocks': [{
+                'title': '',
+                'useSpan': false,
+                'data' : [
+                    dataGrid.renderGrid('collaborators-grid', {'id': entity.id})
+                ]
+            }]
         }] ) %}
     {% endif %}
 

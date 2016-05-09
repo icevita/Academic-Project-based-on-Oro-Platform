@@ -40,7 +40,6 @@ class IssueHandler
      */
     public function process(Issue $issue, $currentUser)
     {
-        $this->checkForm($issue, $currentUser);
         $this->form->setData($issue);
         if (in_array($this->request->getMethod(), ['POST', 'PUT'])) {
             $this->form->submit($this->request);
@@ -73,21 +72,6 @@ class IssueHandler
     public function getForm()
     {
         return $this->form;
-    }
-
-    /**
-     * @param Issue $issue
-     * @param $currentUser
-     */
-    protected function checkForm(Issue $issue, $currentUser)
-    {
-        if ($issue->getId() || $issue->getParent()) {
-            $this->form->remove('type');
-        } else {
-            $issue
-                ->setReporter($currentUser)
-                ->setAssignee($currentUser);
-        }
     }
 
     /**

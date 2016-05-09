@@ -1,5 +1,10 @@
 oro:
     issue:
+        types:
+          subtask: Subtask
+          task: Task
+          bug: Bug
+          story: Story
         report: Issue Report
         menu:
             label:  Issues

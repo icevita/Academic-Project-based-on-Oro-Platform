@@ -135,9 +135,11 @@ class IssueController extends Controller
      */
     public function viewAction(Issue $issue)
     {
+        $issueTypes = $this->container->getParameter('issue.types');
         return [
             'entity' => $issue,
-            'user' => $this->getUser()
+            'user' => $this->getUser(),
+            'issue_types' => $issueTypes
         ];
     }
 

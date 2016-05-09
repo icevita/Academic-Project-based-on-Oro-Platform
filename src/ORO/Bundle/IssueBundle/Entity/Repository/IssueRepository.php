@@ -1,6 +1,6 @@
 <?php
 
-namespace Oro\Bundle\IssueBundle\Entity\Repository;
+namespace ORO\Bundle\IssueBundle\Entity\Repository;
 
 use Doctrine\ORM\EntityRepository;
 

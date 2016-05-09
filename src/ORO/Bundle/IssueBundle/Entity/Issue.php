@@ -12,6 +12,7 @@ use Oro\Bundle\EntityConfigBundle\Metadata\Annotation\ConfigField;
 use ORO\Bundle\IssueBundle\Model\ExtendIssue;
 use Oro\Bundle\WorkflowBundle\Entity\WorkflowItem;
 use Oro\Bundle\WorkflowBundle\Entity\WorkflowStep;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Issue
@@ -76,6 +77,8 @@ class Issue extends ExtendIssue implements DatesAwareInterface
      * @var string
      *
      * @ORM\Column type="string", length=255)
+     * @Assert\NotBlank()
+     * @Assert\Length(min=3)
      * @ConfigField(
      *      defaultValues={
      *          "importexport"={
@@ -92,7 +95,8 @@ class Issue extends ExtendIssue implements DatesAwareInterface
     /**
      * @var string
      *
-     * @ORM\Column(type="string", length=25)
+     * @ORM\Column(type="string", unique=true, length=25)
+     * @Assert\NotBlank()
      * @ConfigField(
      *      defaultValues={
      *          "importexport"={
@@ -109,7 +113,7 @@ class Issue extends ExtendIssue implements DatesAwareInterface
     /**
      * @var string
      *
-     * @ORM\Column(type="text", nullable=true, unique=true)
+     * @ORM\Column(type="text", nullable=true, length=255, unique=false)
      * @ConfigField(
      *      defaultValues={
      *          "importexport"={
@@ -127,6 +131,7 @@ class Issue extends ExtendIssue implements DatesAwareInterface
      * @var string
      *
      * @ORM\Column(name="issue_type", type="string", length=25)
+     * @Assert\NotBlank()
      * @ConfigField(
      *      defaultValues={
      *          "importexport"={
@@ -145,6 +150,7 @@ class Issue extends ExtendIssue implements DatesAwareInterface
      *
      * @ORM\ManyToOne(targetEntity="Priority")
      * @ORM\JoinColumn(name="priority_id", referencedColumnName="id", onDelete="SET NULL")
+     * @Assert\NotBlank()
      * @ConfigField(
      *      defaultValues={
      *          "importexport"={
@@ -181,6 +187,7 @@ class Issue extends ExtendIssue implements DatesAwareInterface
      *
      * @ORM\ManyToOne(targetEntity="Oro\Bundle\UserBundle\Entity\User")
      * @ORM\JoinColumn(name="reporter_id", referencedColumnName="id", onDelete="SET NULL")
+     * @Assert\NotBlank()
      * @ConfigField(
      *      defaultValues={
      *          "dataaudit"={
@@ -763,6 +770,7 @@ class Issue extends ExtendIssue implements DatesAwareInterface
     public function setOrganization(Organization $organization = null)
     {
         $this->organization = $organization;
+
         return $this;
     }
 
