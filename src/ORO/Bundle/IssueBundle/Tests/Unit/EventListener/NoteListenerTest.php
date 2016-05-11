@@ -4,7 +4,7 @@ namespace ORO\Bundle\IssueBundle\Tests\Unit\EventListener;
 
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use ORO\Bundle\IssueBundle\Entity\Issue;
-use Oro\Bundle\IssueBundle\EventListener\NoteListener;
+use ORO\Bundle\IssueBundle\EventListener\NoteListener;
 use Oro\Bundle\NoteBundle\Entity\Note;
 
 class NoteListenerTest extends \PHPUnit_Framework_TestCase

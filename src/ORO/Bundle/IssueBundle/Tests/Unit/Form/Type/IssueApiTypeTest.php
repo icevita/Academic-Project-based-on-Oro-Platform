@@ -16,6 +16,16 @@ class IssueApiTypeTest extends IssueTypeTest
     }
 
     /**
+     * @dataProvider issueDataProvider
+     * @param $formData
+     */
+    public function testSubmitValidData(
+        $formData
+    ) {
+        parent::testSubmitValidData($formData);
+    }
+
+    /**
      * {@inheritdoc}
      */
     protected function assertFormOptions($form)

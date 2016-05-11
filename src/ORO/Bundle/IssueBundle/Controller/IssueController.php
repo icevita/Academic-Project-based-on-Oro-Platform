@@ -80,7 +80,7 @@ class IssueController extends Controller
     private function update(Issue $issue, $formAction)
     {
         $issueHandler = $this->get('form.handler.issue');
-        if ($issueHandler->process($issue, $this->getUser())) {
+        if ($issueHandler->process($issue)) {
             $this->get('session')->getFlashBag()->add(
                 'success',
                 $this->get('translator')->trans('oro.issue.saved_message')

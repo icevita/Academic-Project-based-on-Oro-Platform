@@ -35,10 +35,9 @@ class IssueHandler
      * Process form
      *
      * @param Issue $issue
-     * @param \Oro\Bundle\UserBundle\Entity\User $currentUser
      * @return bool  True on successful processing, false otherwise
      */
-    public function process(Issue $issue, $currentUser)
+    public function process(Issue $issue)
     {
         $this->form->setData($issue);
         if (in_array($this->request->getMethod(), ['POST', 'PUT'])) {

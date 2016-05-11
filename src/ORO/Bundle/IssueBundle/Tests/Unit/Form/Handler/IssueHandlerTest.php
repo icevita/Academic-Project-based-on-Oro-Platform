@@ -74,13 +74,7 @@ class IssueHandlerTest extends \PHPUnit_Framework_TestCase
         $this->om->expects($this->once())
             ->method('flush');
 
-        $this->issue->expects($this->once())
-            ->method('getId')
-            ->willReturn(1);
-        $this->form->expects($this->once())
-            ->method('remove');
-
-        $this->assertTrue($this->handler->process($this->issue, $this->user));
+        $this->assertTrue($this->handler->process($this->issue));
     }
 
     public function testBadRequest()
@@ -103,13 +97,7 @@ class IssueHandlerTest extends \PHPUnit_Framework_TestCase
         $this->om->expects($this->never())
             ->method('flush');
 
-        $this->issue->expects($this->once())
-            ->method('getId')
-            ->willReturn(1);
-        $this->form->expects($this->once())
-            ->method('remove');
-
-        $this->assertFalse($this->handler->process($this->issue, $this->user));
+        $this->assertFalse($this->handler->process($this->issue));
     }
 
     public function testNotValidForm()
@@ -132,12 +120,7 @@ class IssueHandlerTest extends \PHPUnit_Framework_TestCase
         $this->om->expects($this->never())
             ->method('flush');
 
-        $this->issue->expects($this->once())
-            ->method('getId')
-            ->willReturn(1);
-        $this->form->expects($this->once())
-            ->method('remove');
 
-        $this->assertFalse($this->handler->process($this->issue, $this->user));
+        $this->assertFalse($this->handler->process($this->issue));
     }
 }

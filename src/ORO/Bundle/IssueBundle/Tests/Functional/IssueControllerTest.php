@@ -57,9 +57,9 @@ class IssueControllerTest extends WebTestCase
         );
 
         $form = $crawler->selectButton('Save and Close')->form();
-        $form['oro_issue_issue_form[code]'] = 'SI-0002';
-        $form['oro_issue_issue_form[summary]'] = 'Summary test';
-        $form['oro_issue_issue_form[description]'] = 'Description test';
+        $form['issue[code]'] = 'SI-0002';
+        $form['issue[summary]'] = 'Summary test';
+        $form['issue[description]'] = 'Description test';
 
         $this->client->followRedirects(true);
         $crawler = $this->client->submit($form);
@@ -97,8 +97,7 @@ class IssueControllerTest extends WebTestCase
         $this->assertHtmlResponseStatusCodeEquals($result, 200);
 
         $content = $result->getContent();
-        $this->assertContains('All Issues', $content);
-        $this->assertContains('Manage filters', $content);
-        $this->assertContains('Create issue', $content);
+        $this->assertContains('Issues', $content);
+        $this->assertContains('Clear All Filters', $content);
     }
 }

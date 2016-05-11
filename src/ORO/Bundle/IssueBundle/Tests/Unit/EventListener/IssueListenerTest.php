@@ -4,7 +4,7 @@ namespace ORO\Bundle\IssueBundle\Tests\Unit\EventListener;
 
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use ORO\Bundle\IssueBundle\Entity\Issue;
-use Oro\Bundle\IssueBundle\EventListener\IssueListener;
+use ORO\Bundle\IssueBundle\EventListener\IssueListener;
 use Oro\Bundle\NavigationBundle\Content\TagGeneratorChain;
 use Oro\Bundle\NavigationBundle\Content\TopicSender;
 
