@@ -1,10 +1,11 @@
 <?php
 
-namespace OroB2B\Bundle\FallbackBundle\Migrations\Schema;
+namespace ORO\Bundle\IssueBundle\Migrations\Schema;
 
 use Doctrine\DBAL\Schema\Schema;
 
 use Oro\Bundle\ActivityBundle\Migration\Extension\ActivityExtension;
+use Oro\Bundle\ActivityBundle\Migration\Extension\ActivityExtensionAwareInterface;
 use Oro\Bundle\MigrationBundle\Migration\Installation;
 use Oro\Bundle\MigrationBundle\Migration\QueryBag;
 use Oro\Bundle\NoteBundle\Migration\Extension\NoteExtension;
@@ -12,7 +13,8 @@ use Oro\Bundle\NoteBundle\Migration\Extension\NoteExtensionAwareInterface;
 
 class OROIssueBundleInstaller implements
     Installation,
-    NoteExtensionAwareInterface
+    NoteExtensionAwareInterface,
+    ActivityExtensionAwareInterface
 {
 
     /** @var NoteExtension */
@@ -26,7 +28,7 @@ class OROIssueBundleInstaller implements
      */
     public function getMigrationVersion()
     {
-        return 'v1_0';
+        return 'v1_2';
     }
 
     /**

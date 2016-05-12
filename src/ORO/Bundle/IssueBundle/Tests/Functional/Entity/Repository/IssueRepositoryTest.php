@@ -1,5 +1,5 @@
 <?php
-namespace ORO\Bundle\IssueBundle\Tests\Functional\Repository;
+namespace ORO\Bundle\IssueBundle\Tests\Functional\Entity\Repository;
 
 
 use Doctrine\ORM\EntityManager;
